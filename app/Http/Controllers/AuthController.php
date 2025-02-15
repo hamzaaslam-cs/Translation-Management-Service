@@ -23,11 +23,52 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @OA\Info(
+ *     version="1.0.0",
+ *     title="Authentication API Documentation",
+ *     description="API endpoints for user authentication and password management",
+ *     @OA\Contact(
+ *         email="admin@example.com"
+ *     )
+ * )
+ */
 class AuthController extends Controller
 {
     public function __construct(public AuthRepository $authRepository)
-    {}
+    {
+    }
 
+    /**
+     * @OA\Post(
+     *     path="/auth/register",
+     *     summary="Register a new user",
+     *     tags={"Authentication"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name","email","password","password_confirmation"},
+     *             @OA\Property(property="name", type="string", example="John Doe"),
+     *             @OA\Property(property="email", type="string", format="email", example="john@example.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="password123"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="User registered successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer", example=1),
+     *             @OA\Property(property="name", type="string", example="John Doe"),
+     *             @OA\Property(property="email", type="string", format="email", example="john@example.com"),
+     *             @OA\Property(property="created_at", type="string", format="date-time")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation errors"
+     *     )
+     * )
+     */
     public function register(RegistrationRequest $request): JsonResponse
     {
         $user = $this->authRepository->store($request->validated());
@@ -35,6 +76,34 @@ class AuthController extends Controller
         return response()->json(AuthResource::make($user));
     }
 
+    /**
+     * @OA\Post(
+     *     path="/auth/login",
+     *     summary="Authenticate user and create session",
+     *     tags={"Authentication"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email","password"},
+     *             @OA\Property(property="email", type="string", format="email", example="john@example.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="password123")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Login successful",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer", example=1),
+     *             @OA\Property(property="name", type="string", example="John Doe"),
+     *             @OA\Property(property="email", type="string", format="email", example="john@example.com")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Invalid credentials"
+     *     )
+     * )
+     */
     public function login(LoginRequest $request): JsonResponse
     {
         $credentials = $request->validated();
@@ -45,6 +114,31 @@ class AuthController extends Controller
         return response()->json(AuthResource::make(auth()->user()));
     }
 
+    /**
+     * @OA\Post(
+     *     path="/auth/forget-password",
+     *     summary="Send password reset link to email",
+     *     tags={"Password Reset"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email"},
+     *             @OA\Property(property="email", type="string", format="email", example="john@example.com")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Password reset link sent successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Password reset link sent to your email")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation errors"
+     *     )
+     * )
+     */
     public function forgetPassword(ForgetPasswordRequest $request): JsonResponse
     {
         $data = $request->validated();
