@@ -19,8 +19,8 @@ class TranslationFilters extends QueryFilterBase
         return $this->builder->where('key', 'LIKE', '%'.$term.'%');
     }
 
-    public function value($term)
+    public function content($term)
     {
-        return $this->builder->where('value', 'LIKE', '%'.$term.'%');
+        return $this->builder->where('content', 'LIKE', '%'.$term.'%');
     }
 }
