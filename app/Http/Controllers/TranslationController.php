@@ -10,6 +10,7 @@ use App\Repositories\TranslationRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TranslationController extends Controller
 {
@@ -67,7 +68,7 @@ class TranslationController extends Controller
         }
 
         return response()->json([
-            'file_url' => asset("storage/exports/" . basename(Cache::get('translations_json_file'))),
+            'file_url' => Storage::url(Cache::get('translations_json_file')),
         ]);
     }
 }

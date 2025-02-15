@@ -26,16 +26,13 @@ use Illuminate\Validation\ValidationException;
 class AuthController extends Controller
 {
     public function __construct(public AuthRepository $authRepository)
-    {
-    }
+    {}
 
     public function register(RegistrationRequest $request): JsonResponse
     {
         $user = $this->authRepository->store($request->validated());
         Mail::to($user)->queue(new WelcomeEmail($user));
-
         return response()->json(AuthResource::make($user));
-
     }
 
     public function login(LoginRequest $request): JsonResponse
@@ -45,7 +42,6 @@ class AuthController extends Controller
         if (!$res) {
             throw ValidationException::withMessages(['email' => trans('auth.failed')]);
         }
-
         return response()->json(AuthResource::make(auth()->user()));
     }
 
@@ -53,6 +49,7 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         $token = $this->authRepository->forgetPassword($data['email']);
+
         if (!empty($token)) {
             $user = User::where('email', $data['email'])->first();
             Mail::to($user)->queue(new ForgetPasswordEmail($token));

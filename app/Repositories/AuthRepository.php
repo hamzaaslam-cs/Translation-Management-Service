@@ -12,13 +12,11 @@ class AuthRepository
 {
     public function store(array $attributes)
     {
-        return DB::transaction(function () use ($attributes) {
-            return User::create([
-                'name' => $attributes['name'],
-                'email' => $attributes['email'],
-                'password' => bcrypt($attributes['password']),
-            ]);
-        });
+        return User::create([
+            'name' => $attributes['name'],
+            'email' => $attributes['email'],
+            'password' => bcrypt($attributes['password']),
+        ]);
     }
 
     public function update($id, array $attributes)
@@ -32,7 +30,6 @@ class AuthRepository
             PasswordReset::where('email', '=', $email)->delete();
             $token = Str::random(64);
             PasswordReset::create(['email' => $email, 'token' => bcrypt($token), 'expires_at' => Carbon::now()->addMinutes(3)]);
-
             return $token;
         } else {
             return null;

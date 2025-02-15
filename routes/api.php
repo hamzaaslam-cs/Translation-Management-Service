@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('/auth')->group(function () {
-    Route::post('register', [AuthController::class, 'register']);
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('forget', [AuthController::class, 'forgetPassword']);
+    Route::post('register', [AuthController::class, 'register'])->name('auth.register');
+    Route::post('login', [AuthController::class, 'login'])->name('auth.login');
+    Route::post('forget', [AuthController::class, 'forgetPassword'])->name('auth.forget-password');
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {

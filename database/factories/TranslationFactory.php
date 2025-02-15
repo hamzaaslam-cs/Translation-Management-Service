@@ -22,21 +22,11 @@ class TranslationFactory extends Factory
 
     public function definition(): array
     {
-        static $usedKeys = [];
-
-        do {
-            $key = $this->faker->word().'_'.$this->faker->unique()->numberBetween(1000, 9999);
-        } while (in_array($key, $usedKeys));
-
-        $usedKeys[] = $key;
-
         return [
-            'locale' => $this->faker->randomElement(['en', 'fr', 'es']),
-            'key' => $key,
-            'value' => $this->faker->sentence(),
-            'tags' => json_encode($this->faker->randomElements(['mobile', 'desktop', 'web'], rand(1, 3))),
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'locale' => $this->faker->languageCode,
+            'key' => $this->faker->word,
+            'content' => $this->faker->sentence,
+            'tags' => json_encode([$this->faker->word]),
         ];
     }
 }
