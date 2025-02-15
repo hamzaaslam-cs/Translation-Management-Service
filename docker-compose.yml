@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+    # PHP Service
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: laravel_app
+        restart: unless-stopped
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        environment:
+            DB_CONNECTION: mysql
+            DB_HOST: db
+            DB_PORT: 3306
+            DB_DATABASE: laravel
+            DB_USERNAME: root       # Changed to root user
+            DB_PASSWORD: password   # Use the root password
+            MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+        depends_on:
+            db:
+                condition: service_healthy
+        networks:
+            - laravel_net
+
+    # Nginx Service
+    webserver:
+        image: nginx:alpine
+        container_name: laravel_nginx
+        restart: unless-stopped
+        ports:
+            - "8000:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+        depends_on:
+            - app
+        networks:
+            - laravel_net
+
+    # MySQL Service
+    db:
+        image: mysql:8.0
+        container_name: laravel_db
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: laravel
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ppassword"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
+        ports:
+            - "3306:3306"
+        volumes:
+            - dbdata:/var/lib/mysql
+        command: '--default-authentication-plugin=mysql_native_password'
+        networks:
+            - laravel_net
+
+networks:
+    laravel_net:
+        driver: bridge
+
+volumes:
+    dbdata:
+        driver: local

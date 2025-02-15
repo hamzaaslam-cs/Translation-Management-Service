@@ -56,7 +56,7 @@ class TranslationController extends Controller
      *             @OA\Items(
      *                 @OA\Property(property="id", type="integer"),
      *                 @OA\Property(property="key", type="string"),
-     *                 @OA\Property(property="value", type="string"),
+     *                 @OA\Property(property="content", type="string"),
      *                 @OA\Property(property="tags", type="array", @OA\Items(type="string")),
      *                 @OA\Property(property="created_at", type="string", format="date-time"),
      *                 @OA\Property(property="updated_at", type="string", format="date-time")
@@ -93,7 +93,7 @@ class TranslationController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="id", type="integer"),
      *             @OA\Property(property="key", type="string"),
-     *             @OA\Property(property="value", type="string"),
+     *             @OA\Property(property="content", type="string"),
      *             @OA\Property(property="tags", type="array", @OA\Items(type="string"))
      *         )
      *     ),
@@ -122,9 +122,9 @@ class TranslationController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"key","value"},
+     *             required={"key","content"},
      *             @OA\Property(property="key", type="string", example="welcome_message"),
-     *             @OA\Property(property="value", type="string", example="Welcome to our application"),
+     *             @OA\Property(property="content", type="string", example="Welcome to our application"),
      *             @OA\Property(property="tags", type="array", @OA\Items(type="string"), example={"general", "welcome"})
      *         )
      *     ),
@@ -166,7 +166,7 @@ class TranslationController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             @OA\Property(property="key", type="string"),
-     *             @OA\Property(property="value", type="string"),
+     *             @OA\Property(property="content", type="string"),
      *             @OA\Property(property="tags", type="array", @OA\Items(type="string"))
      *         )
      *     ),

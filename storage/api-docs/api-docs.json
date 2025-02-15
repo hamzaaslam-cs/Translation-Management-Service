@@ -61,10 +61,6 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "id": {
-                                            "type": "integer",
-                                            "example": 1
-                                        },
                                         "name": {
                                             "type": "string",
                                             "example": "John Doe"
@@ -74,9 +70,9 @@
                                             "format": "email",
                                             "example": "john@example.com"
                                         },
-                                        "created_at": {
+                                        "token": {
                                             "type": "string",
-                                            "format": "date-time"
+                                            "format": "3|RkOefsYDFPCOaoYSwlsZ77b4q85W1Qv34y5lbhWobb2643b0"
                                         }
                                     },
                                     "type": "object"
@@ -130,10 +126,6 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "id": {
-                                            "type": "integer",
-                                            "example": 1
-                                        },
                                         "name": {
                                             "type": "string",
                                             "example": "John Doe"
@@ -142,6 +134,10 @@
                                             "type": "string",
                                             "format": "email",
                                             "example": "john@example.com"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "format": "3|RkOefsYDFPCOaoYSwlsZ77b4q85W1Qv34y5lbhWobb2643b0"
                                         }
                                     },
                                     "type": "object"
@@ -238,7 +234,7 @@
                                             "key": {
                                                 "type": "string"
                                             },
-                                            "value": {
+                                            "content": {
                                                 "type": "string"
                                             },
                                             "tags": {
@@ -285,14 +281,14 @@
                             "schema": {
                                 "required": [
                                     "key",
-                                    "value"
+                                    "content"
                                 ],
                                 "properties": {
                                     "key": {
                                         "type": "string",
                                         "example": "welcome_message"
                                     },
-                                    "value": {
+                                    "content": {
                                         "type": "string",
                                         "example": "Welcome to our application"
                                     },
@@ -360,7 +356,7 @@
                                         "key": {
                                             "type": "string"
                                         },
-                                        "value": {
+                                        "content": {
                                             "type": "string"
                                         },
                                         "tags": {
@@ -413,7 +409,7 @@
                                     "key": {
                                         "type": "string"
                                     },
-                                    "value": {
+                                    "content": {
                                         "type": "string"
                                     },
                                     "tags": {

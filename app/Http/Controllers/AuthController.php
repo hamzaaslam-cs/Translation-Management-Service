@@ -57,10 +57,10 @@ class AuthController extends Controller
      *         response=200,
      *         description="User registered successfully",
      *         @OA\JsonContent(
-     *             @OA\Property(property="id", type="integer", example=1),
+
      *             @OA\Property(property="name", type="string", example="John Doe"),
      *             @OA\Property(property="email", type="string", format="email", example="john@example.com"),
-     *             @OA\Property(property="created_at", type="string", format="date-time")
+     *             @OA\Property(property="token", type="string", format="3|RkOefsYDFPCOaoYSwlsZ77b4q85W1Qv34y5lbhWobb2643b0")
      *         )
      *     ),
      *     @OA\Response(
@@ -93,9 +93,9 @@ class AuthController extends Controller
      *         response=200,
      *         description="Login successful",
      *         @OA\JsonContent(
-     *             @OA\Property(property="id", type="integer", example=1),
      *             @OA\Property(property="name", type="string", example="John Doe"),
-     *             @OA\Property(property="email", type="string", format="email", example="john@example.com")
+     *             @OA\Property(property="email", type="string", format="email", example="john@example.com"),
+     *             @OA\Property(property="token", type="string", format="3|RkOefsYDFPCOaoYSwlsZ77b4q85W1Qv34y5lbhWobb2643b0")
      *         )
      *     ),
      *     @OA\Response(
