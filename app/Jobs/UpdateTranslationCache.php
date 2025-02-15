@@ -30,18 +30,20 @@ class UpdateTranslationCache implements ShouldQueue
 
     public function updateCache(): void
     {
+        $disk = config('filesystems.default'); // Get the default storage disk
+
         if (Cache::has('translations_json_file')) {
             $oldFilePath = Cache::get('translations_json_file');
 
-            // Explicitly use the 'public' disk
-            Storage::disk('public')->delete($oldFilePath);
+            // Delete the old file from the appropriate disk
+            Storage::disk($disk)->delete($oldFilePath);
         }
 
         $fileName = 'translations_' . now()->timestamp . '.json.gz';
         $filePath = "exports/$fileName";
 
         // Stream the JSON content and compress
-        Storage::disk('public')->put($filePath, gzencode($this->generateJson()));
+        Storage::disk($disk)->put($filePath, gzencode($this->generateJson()));
 
         // Store the new file path in cache
         Cache::forever('translations_json_file', $filePath);
