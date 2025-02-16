@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Models\Translation;
 use Database\Seeders\TranslationSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;

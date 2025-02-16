@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 
 /**
-
- *
  * @OA\Server(
  *     url="/api",
  *     description="API Server"
@@ -30,10 +28,7 @@ use Illuminate\Support\Facades\Storage;
  */
 class TranslationController extends Controller
 {
-    public function __construct(public TranslationRepository $translationRepository)
-    {
-
-    }
+    public function __construct(public TranslationRepository $translationRepository) {}
 
     /**
      * @OA\Get(
@@ -41,19 +36,25 @@ class TranslationController extends Controller
      *     summary="Get all translations",
      *     tags={"Translations"},
      *     security={{"Bearer":{}}},
+     *
      *     @OA\Parameter(
      *         name="search",
      *         in="query",
      *         description="Search term",
      *         required=false,
+     *
      *         @OA\Schema(type="string")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="List of translations",
+     *
      *         @OA\JsonContent(
      *             type="array",
+     *
      *             @OA\Items(
+     *
      *                 @OA\Property(property="id", type="integer"),
      *                 @OA\Property(property="key", type="string"),
      *                 @OA\Property(property="content", type="string"),
@@ -63,6 +64,7 @@ class TranslationController extends Controller
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthenticated"
@@ -72,6 +74,7 @@ class TranslationController extends Controller
     public function index(TranslationFilters $filters)
     {
         $translations = $this->translationRepository->all($filters);
+
         return response()->json($translations);
     }
 
@@ -81,22 +84,28 @@ class TranslationController extends Controller
      *     summary="Get specific translation",
      *     tags={"Translations"},
      *     security={{"Bearer":{}}},
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
+     *
      *         @OA\Schema(type="integer")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Translation details",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="id", type="integer"),
      *             @OA\Property(property="key", type="string"),
      *             @OA\Property(property="content", type="string"),
      *             @OA\Property(property="tags", type="array", @OA\Items(type="string"))
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthenticated"
@@ -110,6 +119,7 @@ class TranslationController extends Controller
     public function show(Request $request, $id): JsonResponse
     {
         $translation = $this->translationRepository->find($id);
+
         return response()->json($translation);
     }
 
@@ -119,15 +129,19 @@ class TranslationController extends Controller
      *     summary="Create new translation",
      *     tags={"Translations"},
      *     security={{"Bearer":{}}},
+     *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(
      *             required={"key","content"},
+     *
      *             @OA\Property(property="key", type="string", example="welcome_message"),
      *             @OA\Property(property="content", type="string", example="Welcome to our application"),
      *             @OA\Property(property="tags", type="array", @OA\Items(type="string"), example={"general", "welcome"})
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Translation created successfully"
@@ -147,6 +161,7 @@ class TranslationController extends Controller
         $data = $request->validated();
         $data['tags'] = json_encode($data['tags'] ?? []);
         $translation = $this->translationRepository->store($data);
+
         return response()->json($translation);
     }
 
@@ -156,20 +171,26 @@ class TranslationController extends Controller
      *     summary="Update translation",
      *     tags={"Translations"},
      *     security={{"Bearer":{}}},
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
+     *
      *         @OA\Schema(type="integer")
      *     ),
+     *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="key", type="string"),
      *             @OA\Property(property="content", type="string"),
      *             @OA\Property(property="tags", type="array", @OA\Items(type="string"))
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Translation updated successfully"
@@ -191,6 +212,7 @@ class TranslationController extends Controller
             $data['tags'] = json_encode($data['tags']);
         }
         $translation = $this->translationRepository->update($data, $id);
+
         return response()->json($translation);
     }
 
@@ -200,19 +222,25 @@ class TranslationController extends Controller
      *     summary="Delete translation",
      *     tags={"Translations"},
      *     security={{"Bearer":{}}},
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
+     *
      *         @OA\Schema(type="integer")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Translation deleted successfully",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthenticated"
@@ -226,7 +254,8 @@ class TranslationController extends Controller
     public function destroy($id)
     {
         $this->translationRepository->destroy($id);
-        return response()->json(["message" => trans("general.deleted")]);
+
+        return response()->json(['message' => trans('general.deleted')]);
     }
 
     /**
@@ -235,13 +264,17 @@ class TranslationController extends Controller
      *     summary="Export translations as JSON",
      *     tags={"Translations"},
      *     security={{"Bearer":{}}},
+     *
      *     @OA\Response(
      *         response=200,
      *         description="JSON file URL",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="file_url", type="string")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthenticated"
@@ -250,7 +283,7 @@ class TranslationController extends Controller
      */
     public function exportJson(): JsonResponse
     {
-        if (!Cache::has('translations_json_file')) {
+        if (! Cache::has('translations_json_file')) {
             UpdateTranslationCache::dispatchSync();
         }
 

@@ -2,9 +2,9 @@
 
 use App\Jobs\UpdateTranslationCache;
 use App\Models\Translation;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
@@ -19,7 +19,7 @@ it('stores a new translations file and caches the file path', function () {
     Translation::factory()->count(5)->create();
     // Dispatch the job
 
-    $job = new UpdateTranslationCache();
+    $job = new UpdateTranslationCache;
     $job->handle();
 
     // Assert a file is stored in 's3'
@@ -42,7 +42,7 @@ it('deletes the old file if it exists in cache', function () {
     Cache::forever('translations_json_file', $oldFilePath);
 
     // Dispatch the job
-    $job = new UpdateTranslationCache();
+    $job = new UpdateTranslationCache;
     $job->handle();
 
     // Ensure old file is deleted

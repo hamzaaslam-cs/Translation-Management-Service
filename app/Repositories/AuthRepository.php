@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Models\PasswordReset;
 use App\Models\User;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class AuthRepository
@@ -30,6 +29,7 @@ class AuthRepository
             PasswordReset::where('email', '=', $email)->delete();
             $token = Str::random(64);
             PasswordReset::create(['email' => $email, 'token' => bcrypt($token), 'expires_at' => Carbon::now()->addMinutes(3)]);
+
             return $token;
         } else {
             return null;

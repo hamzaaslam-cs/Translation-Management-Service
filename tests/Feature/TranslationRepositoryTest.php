@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
+use App\Filters\QueryFilterBase;
 use App\Models\Translation;
 use App\Repositories\TranslationRepository;
-use App\Filters\QueryFilterBase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->repository = new TranslationRepository();
+    $this->repository = new TranslationRepository;
 });
 
 describe('TranslationRepository Unit Tests', function () {

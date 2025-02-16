@@ -13,6 +13,7 @@ class TranslationRepository implements Contracts\CommonContract
         if (! empty($filters) && $filters->hasFilters()) {
             $translations = $translations->filter($filters);
         }
+
         return $translations->simplePaginate(config('app.paginate'));
     }
 

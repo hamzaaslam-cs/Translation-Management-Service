@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Translation;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Carbon;
 
 // Ensure this points to your Translation model
 

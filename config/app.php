@@ -123,6 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'paginate' => 20
+    'paginate' => 20,
 
 ];

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Jobs\UpdateTranslationCache;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -50,5 +51,7 @@ class TranslationSeeder extends Seeder
         if (! empty($records)) {
             DB::table('translations')->insert($records);
         }
+
+        UpdateTranslationCache::dispatchSync();
     }
 }

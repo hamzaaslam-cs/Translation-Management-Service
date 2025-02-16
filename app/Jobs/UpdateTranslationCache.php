@@ -37,7 +37,7 @@ class UpdateTranslationCache implements ShouldQueue
             Storage::delete($oldFilePath);
         }
 
-        $fileName = 'translations_' . now()->timestamp . '.json.gz';
+        $fileName = 'translations_'.now()->timestamp.'.json.gz';
         $filePath = "exports/$fileName";
 
         // Stream the JSON content and compress
@@ -49,15 +49,15 @@ class UpdateTranslationCache implements ShouldQueue
 
     private function generateJson(): string
     {
-        return '[' . Translation::select(['id', 'locale', 'key', 'content', 'tags'])
-                ->lazy()
-                ->map(fn($t) => json_encode([
-                    'id' => $t->id,
-                    'locale' => $t->locale,
-                    'key' => $t->key,
-                    'content' => $t->content,
-                    'tags' => $t->tags,
-                ]))
-                ->implode(',') . ']';
+        return '['.Translation::select(['id', 'locale', 'key', 'content', 'tags'])
+            ->lazy()
+            ->map(fn ($t) => json_encode([
+                'id' => $t->id,
+                'locale' => $t->locale,
+                'key' => $t->key,
+                'content' => $t->content,
+                'tags' => $t->tags,
+            ]))
+            ->implode(',').']';
     }
 }

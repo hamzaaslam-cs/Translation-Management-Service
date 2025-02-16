@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\TranslationController;
 use App\Jobs\UpdateTranslationCache;
 use App\Traits\HasFilters;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
