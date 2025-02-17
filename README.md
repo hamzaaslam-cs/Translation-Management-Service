@@ -52,9 +52,9 @@ cp .env.example .env
 ##### Database Configuration
 ```env
 DB_CONNECTION=mysql
-DB_HOST=localhost
-DB_PORT=3307
-DB_DATABASE=translation_management_service
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=laravel
 DB_USERNAME=root
 DB_PASSWORD=password
 ```
