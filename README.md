@@ -83,9 +83,13 @@ php artisan db:seed
 ```bash
 php artisan test
 ````
-4To run tests
+4. To run tests
 ```bash
 php artisan key:generate
+````
+5. To create storage symlinks
+```bash
+php artisan storage:link
 ````
 
 
