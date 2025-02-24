@@ -111,6 +111,11 @@ docker-compose exec app php artisan migrate
 - Make sure your MySQL server is running before running migrations
 - Ensure all required PHP extensions are installed
 
+- Run Queue Worker to precoess queuejob
+```bash
+php artisan queue:work
+````
+
 
 Check Swagger Documentation Visit:
 http://127.0.0.1:8000/api/documentation
